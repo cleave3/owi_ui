@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <h3 class="tc">BUTTONS / TOASTR</h3>
+      <button  class="btn btn-info" onclick="toastr.info('this is an info message')">Info</button>
+      <button  class="btn btn-success" onclick="toastr.success('this is a success message')">Success</button>
+      <button  class="btn btn-error" onclick="toastr.error('this is an error message')">Error</button>
+      <button  class="btn btn-warning" onclick="toastr.warning('this is a warning message')">Warning</button>
+      <button  class="btn btn-primary" onclick="toastr.confirm('this is a confirmation message')">confrim</button>
+      <!-- <button  class="btn btn-light" onclick="toastr.errorhandler('this is an error handler')">Error Handler</button> -->
+
+      <h3 class="tc">EFFECTS</h3>
+      <div id="content">
+        <img src="" alt="" id="image" />
+      </div>
+      <label for="file">Select an image an over to see zoom effect</label><br/>
+      <input type="file" id="file"/>
+    </div>
+    <script src="index.js"></script>
+    <script>
+      let docType = ["image/gif", "image/png", "image/jpg", "image/jpeg", "image/bmp"];
+
+      effects.zoom("#content", "#image");
+
+      document.getElementById("file").addEventListener("change", (e) => {
+        if(!docType.includes(e.target.files[0].type)) {
+          return toastr.error("select file must be an image")
+        }
+        const reader = new FileReader();
+        const selectedfile = e.target.files[0];
+        const preview = document.getElementById("image");
+
+        reader.addEventListener("load", (e) => {
+          preview.src = e.target.result;
+        });
+        reader.readAsDataURL(selectedfile);
+      });
+    </script>
+  </body>
+</html>
